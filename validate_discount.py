@@ -6,7 +6,7 @@ _AVAILABLE_DISCOUNT_CODES = [
 ]
 
 
-def validate_discount_code(discount_code):
+def validate_discount_code(discount_code: str) -> bool | None:
     """
     Ejemplo:
     "primavera2021" deberia devolver True, ya que al compararlo:
@@ -19,7 +19,22 @@ def validate_discount_code(discount_code):
     'v', 'n',
     'o', 'm', '2', '0', 'd', 'p', '1', 'F', 'h', 'l')
     """
+    # FIXME: esta función produce un bucle infinito al retornar False.
+    # al igual que el ejercicio 2.1.
     max_chars = 3
 
     for code in _AVAILABLE_DISCOUNT_CODES:
         return len(set(code).symmetric_difference(discount_code)) < max_chars
+
+
+def main() -> None:
+    # Ejemplo de uso:
+    while True:
+        discount_code = input("Ingresa un código de descuento: ")
+        if validate_discount_code(discount_code):
+            print("Código valido!")
+            break
+
+
+if __name__ == "__main__":
+    main()

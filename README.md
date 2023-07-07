@@ -1,5 +1,4 @@
 ![black](https://img.shields.io/badge/code%20style-black-black)
-[![Open Source Love](https://badges.frapsoft.com/os/v1/open-source.png?v=103)](https://github.com/ellerbrock/open-source-badges/)
 
 <br/>
 <div align="center">
