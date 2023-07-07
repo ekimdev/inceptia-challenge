@@ -3,8 +3,9 @@ import pandas as pd
 _PRODUCT_DF = pd.DataFrame(
     {
         "product_name": ["Chocolate", "Granizado", "Limon", "Dulce de Leche"],
-        "quantity": [3, 10, 0, 5]
-    })
+        "quantity": [3, 10, 0, 5],
+    }
+)
 PRODUCTS_ATTEMPTS = {product: 0 for product in list(_PRODUCT_DF.product_name)}
 INVALID_PRODUCTS_ATTEMPTS = 0
 MAX_ATTEMPTS = 3
@@ -18,7 +19,7 @@ class ProductNotFoundError(Exception):
     pass
 
 
-def check_attempts(product_name: str):
+def check_attempts(product_name: str) -> None:
     PRODUCTS_ATTEMPTS[product_name] += 1
     product_attempts = PRODUCTS_ATTEMPTS[product_name]
     if product_attempts > MAX_ATTEMPTS:
@@ -26,8 +27,11 @@ def check_attempts(product_name: str):
 
 
 def is_product_available(product_name: str, quantity: int, df=_PRODUCT_DF) -> bool:
-    # NOTE: si bien query al parecer es mas eficiente para DataFrame con grandes
-    # cantidades de datos, para este caso opte por la sintaxis de una variante del metodo loc que es mas pythonica.
+    """Devuelve True si hay stock disponible. False en caso contrario.
+    Levanta una excepción si el producto no existe."""
+    # NOTE: Si bien query al parecer es más eficiente para DataFrame
+    # con grandes cantidades de datos, para este caso opté por la sintaxis
+    # de una variante del método loc que es más pythonica.
     # product = _PRODUCT_DF.query("product_name==@product_name")
     product = df[df.product_name == product_name]
 
@@ -42,9 +46,17 @@ def is_product_available(product_name: str, quantity: int, df=_PRODUCT_DF) -> bo
 
 
 def main() -> None:
-    print(is_product_available("Chocolate", 4))
-    print(is_product_available("Chocolate", 3))
-    print(is_product_available("chocolate", 2))
+    # Ejemplo de uso:
+    try:
+        while True:
+            prod, q = input(">>> ").strip().split(",")
+            if is_product_available(prod, int(q)):
+                print(f"Hay stock de {prod}")
+                break
+    except ProductNotFoundError as product_error:
+        print(product_error)
+    except StockError as stock_error:
+        print(stock_error)
 
 
 if __name__ == "__main__":

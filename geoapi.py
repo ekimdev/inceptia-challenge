@@ -42,12 +42,13 @@ def main() -> None:
     # Configurar argumentos y el loggin
     parser = argparse.ArgumentParser()
     parser.add_argument("-v", "--verbose", action="store_true")
+    parser.add_argument("-m", "--max_temp", type=int, default=28)
     args = parser.parse_args()
 
     if args.verbose:
         logging.basicConfig(level=logging.INFO)
 
-    is_hot = GeoAPI.is_hot_in_pehuajo()
+    is_hot = GeoAPI.is_hot_in_pehuajo(max_temp=args.max_temp)
     print(is_hot)
 
 
